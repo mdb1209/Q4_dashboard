@@ -144,7 +144,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 @keyframes pulse{50%{transform:scale(1.35)}}
 .scoring-for{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px;font-weight:800}
 select{font:inherit;font-weight:800;color:var(--ink);background:var(--soft);border:2px solid var(--ink);border-radius:12px;padding:6px 10px}
-.teams{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.teams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .team{--c:var(--t1);position:relative;background:var(--c);border:var(--b);border-radius:20px;box-shadow:var(--pop);padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0;transition:transform .2s ease}
 .team.lead{transform:translateY(-4px) rotate(-1deg)}
 .crown{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:28px;line-height:1;filter:drop-shadow(2px 2px 0 var(--ink));animation:bob 1.4s ease-in-out infinite}
@@ -190,15 +190,17 @@ input.team-name:focus{background:rgba(255,255,255,.6);border-color:var(--ink);ou
 .prizes span{font-size:12.5px;font-weight:800;background:var(--soft);border:2px solid var(--ink);border-radius:999px;padding:2px 10px}
 
 /* Pitch wheel */
-.wheel{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border:var(--b);border-radius:20px;background:var(--mint);padding:14px;box-shadow:var(--pop-sm)}
-.wheel-disc{width:92px;height:92px;border-radius:50%;border:var(--b);background:conic-gradient(var(--sky) 0 25%,var(--pink) 0 50%,var(--lemon) 0 75%,var(--lav) 0);position:relative;transition:transform 2.2s cubic-bezier(.15,.8,.2,1)}
-.wheel-disc::after{content:"";position:absolute;inset:34%;border-radius:50%;background:var(--card);border:2px solid var(--ink)}
-.wheel-pin{position:relative}
-.wheel-pin::before{content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-top:14px solid var(--ink);z-index:2}
-.wheel-out{display:flex;flex-direction:column;gap:6px;min-width:0}
-.wheel-out h3{font-size:18px}
-.wheel-result{font-family:var(--display);font-size:22px;font-weight:700;min-height:1.3em}
-.wheel-out p{margin:0;font-size:13px;font-weight:700;color:var(--muted)}
+.wheel{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;border:var(--b);border-radius:24px;background:var(--mint);padding:18px 20px;box-shadow:var(--pop-sm)}
+.wheel-stage{position:relative;width:260px;max-width:100%;aspect-ratio:1}
+.wheel-stage svg{display:block;width:100%;height:100%;filter:drop-shadow(4px 4px 0 var(--ink))}
+.wheel-pointer{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:28px solid var(--pink-d);filter:drop-shadow(0 0 0 var(--ink)) drop-shadow(2px 2px 0 var(--ink));z-index:2}
+.wheel-hub{position:absolute;inset:41%;border-radius:50%;background:var(--card);border:var(--b);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;cursor:pointer;z-index:2;transition:transform .12s ease}
+.wheel-hub:hover{transform:scale(1.08)}
+.wheel-out{display:flex;flex-direction:column;gap:8px;min-width:0}
+.wheel-out h3{font-size:22px}
+.wheel-result{font-family:var(--display);font-size:30px;font-weight:700;line-height:1.1;min-height:2.2em;display:flex;align-items:center}
+.wheel-result.win{animation:bump .5s ease}
+.wheel-out p{margin:0;font-size:13.5px;font-weight:700;color:var(--muted)}
 
 /* Toast + confetti */
 #fx{position:fixed;inset:0;pointer-events:none;z-index:50;width:100%;height:100%}
@@ -277,9 +279,6 @@ input.team-name:focus{background:rgba(255,255,255,.6);border-color:var(--ink);ou
 .watch .why{color:var(--muted);font-weight:600}
 .ri-notes{font-size:12.5px;color:var(--muted);font-weight:600;border-top:2px dashed var(--lav);padding-top:10px;display:flex;flex-direction:column;gap:3px}
 .ri-notes b{color:var(--ink)}
-.col-left .ri-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
-.col-left .focus-grid{grid-template-columns:1fr}
-.col-left .flip-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
 body.big .ri-panel{display:none}
 @media (max-width:1020px){.focus-grid{grid-template-columns:1fr}.ri-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.ri-kpis{grid-template-columns:1fr 1fr}.rs-row{grid-template-columns:1fr}}
@@ -322,9 +321,7 @@ body.big .score{font-size:110px}
 body.big .btns{grid-template-columns:repeat(4,minmax(0,1fr))}
 body.big input.team-name{font-size:30px}
 
-@media (max-width:1020px){
-  .main{grid-template-columns:1fr}
-}
+
 @media (max-width:640px){
   .wrap{padding-inline:16px}
   .hero{grid-template-columns:1fr;padding:20px}
@@ -334,11 +331,34 @@ body.big input.team-name{font-size:30px}
   .lb-row{grid-template-columns:36px minmax(0,1fr) 54px;row-gap:6px}
   .lb-bar{grid-column:2 / 4;grid-row:2}
   .score{font-size:54px}
-  .wheel{grid-template-columns:1fr;justify-items:start}
+  .wheel{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .wheel-out{align-items:center}
+  .wheel-stage{width:230px}
 }
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
+  .agenda li.now button,.crown,.dot.live,.panel[data-tab].active{animation:none!important}
 }
+
+/* Tabs: one section at a time */
+.tabnav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:20;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;background:var(--card);border:var(--b);border-radius:22px;box-shadow:var(--pop);padding:8px}
+.tabnav button{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--ink);border-radius:999px;background:var(--card);font-weight:900;font-size:14px;padding:6px 14px;transition:transform .1s ease}
+.tabnav button:hover{transform:translateY(-2px)}
+.tabnav button[aria-selected="true"]{background:var(--tc);box-shadow:var(--pop-sm);transform:rotate(-1.5deg)}
+.main{display:block}
+.main .col{display:contents}
+.zone-label{display:none}
+body:not(.big) .panel[data-tab]:not(.active){display:none}
+.panel[data-tab].active{animation:popin .25s ease}
+@keyframes popin{from{opacity:.4;transform:translateY(8px)}}
+.bd-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.bd-sum{grid-template-columns:repeat(4,minmax(0,1fr))}
+.games-panel .games{grid-template-columns:repeat(4,minmax(0,1fr))}
+body.big .tabnav{display:none}
+body.big .score-panel{display:flex!important}
+body.big .panel[data-tab]:not(.score-panel){display:none!important}
+@media (max-width:1020px){.games-panel .games{grid-template-columns:repeat(2,minmax(0,1fr))}.bd-sum{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:760px){.bd-list{grid-template-columns:1fr}}
+@media (max-width:640px){.games-panel .games,.bd-sum{grid-template-columns:1fr}.tabnav button{font-size:12.5px;padding:5px 10px}}
 </style>
 </head>
 <body>
@@ -350,7 +370,7 @@ body.big input.team-name{font-size:30px}
     <div>
       <span class="sticker">AccentCare Q4 Kickoff</span>
       <h1>Q4 Game Day</h1>
-      <div class="meta"><span>Thu, Oct 1, 2026</span><span>9:30 AM to 3 PM</span><span>3 teams of 5</span></div>
+      <div class="meta"><span>Thu, Oct 1, 2026</span><span>9:30 AM to 3 PM</span><span>2 teams of 7</span></div>
     </div>
     <div class="nowcard" aria-live="polite">
       <div class="label" id="nowLabel">Now</div>
@@ -368,10 +388,19 @@ body.big input.team-name{font-size:30px}
     </div>
   </header>
 
+  <nav class="tabnav" id="tabnav" aria-label="Sections">
+    <button type="button" data-t="agenda" style="--tc:var(--lav)"><span aria-hidden="true">&#128467;</span>Agenda</button>
+    <button type="button" data-t="ri" style="--tc:var(--mint)"><span aria-hidden="true">&#128200;</span>Q3 Wins &amp; Focus</button>
+    <button type="button" data-t="lb" style="--tc:var(--pink)"><span aria-hidden="true">&#127942;</span>AE Leaderboard</button>
+    <button type="button" data-t="bd" style="--tc:var(--lemon)"><span aria-hidden="true">&#127919;</span>Q4 Budget</button>
+    <button type="button" data-t="score" style="--tc:var(--lemon)"><span aria-hidden="true">&#11088;</span>Scoreboard</button>
+    <button type="button" data-t="games" style="--tc:var(--sky)"><span aria-hidden="true">&#127955;</span>Games</button>
+  </nav>
+
   <div class="main">
     <div class="col col-left">
       <div class="zone-label">The Meeting</div>
-      <section class="panel agenda-panel" aria-labelledby="agendaH">
+      <section class="panel agenda-panel" data-tab="agenda" aria-labelledby="agendaH">
         <div class="panel-head">
           <h2 class="tab-title" id="agendaH"><span class="ic" aria-hidden="true">&#128467;</span>Agenda</h2>
           <span class="hint">Tap a block to present it</span>
@@ -379,7 +408,7 @@ body.big input.team-name{font-size:30px}
         <ol class="agenda" id="agenda"></ol>
       </section>
 
-      <section class="panel ri-panel" aria-labelledby="riH">
+      <section class="panel ri-panel" data-tab="ri" aria-labelledby="riH">
         <div class="panel-head">
           <h2 class="tab-title" id="riH"><span class="ic" aria-hidden="true">&#128200;</span>Referral Insights</h2>
           <div class="ri-toggle">
@@ -439,7 +468,7 @@ body.big input.team-name{font-size:30px}
         </div>
       </section>
 
-      <section class="panel lb-panel" aria-labelledby="lbH">
+      <section class="panel lb-panel" data-tab="lb" aria-labelledby="lbH">
         <div class="panel-head">
           <h2 class="tab-title" id="lbH"><span class="ic" aria-hidden="true">&#127942;</span>AE Leaderboard</h2>
           <div class="seg" id="lbSeg" role="tablist" aria-label="Period">
@@ -468,7 +497,7 @@ body.big input.team-name{font-size:30px}
           <span><b>September:</b> data through Sept 24, weighted as 0.8 of a month.</span>
         </div>
       </section>
-      <section class="panel bd-panel" aria-labelledby="bdH">
+      <section class="panel bd-panel" data-tab="bd" aria-labelledby="bdH">
         <div class="panel-head">
           <h2 class="tab-title" id="bdH"><span class="ic" aria-hidden="true">&#127919;</span>Q4 Budget &amp; YTD Tracking</h2>
           <span class="status"><span class="dot" id="bdDot"></span><span id="bdSync">YTD through Sept</span></span>
@@ -481,7 +510,7 @@ body.big input.team-name{font-size:30px}
 
     <div class="col col-right">
       <div class="zone-label">Game Zone</div>
-      <section class="panel score-panel" aria-labelledby="scoreH">
+      <section class="panel score-panel" data-tab="score" aria-labelledby="scoreH">
         <div class="panel-head">
           <h2 class="tab-title" id="scoreH"><span class="ic" aria-hidden="true">&#11088;</span>Live Scoreboard</h2>
           <span class="status"><span class="dot" id="syncDot"></span><span id="syncText">Connecting</span></span>
@@ -501,7 +530,7 @@ body.big input.team-name{font-size:30px}
         </div>
       </section>
 
-      <section class="panel games-panel" aria-labelledby="gamesH">
+      <section class="panel games-panel" data-tab="games" aria-labelledby="gamesH">
         <div class="panel-head">
           <h2 class="tab-title" id="gamesH"><span class="ic" aria-hidden="true">&#127919;</span>Games &amp; Points</h2>
           <div class="prizes"><span>Winners: trophy + $10 gift cards</span></div>
@@ -516,8 +545,8 @@ body.big input.team-name{font-size:30px}
           <article class="game">
             <span class="when">11:30 &middot; Game 1</span>
             <h3>Objection Pong</h3>
-            <p>Round robin: A vs B, B vs C, A vs C. Sink a cup, then answer the objection card in 30 seconds.</p>
-            <div class="pts-line">+1 per cup &middot; +2 strong response &middot; +5 match win</div>
+            <p>Head-to-head, best of 3 games. Sink a cup, then answer the objection card in 30 seconds.</p>
+            <div class="pts-line">+1 per cup &middot; +2 strong response &middot; +5 per game won</div>
           </article>
           <article class="game">
             <span class="when">1:30 &middot; Copilot</span>
@@ -528,12 +557,12 @@ body.big input.team-name{font-size:30px}
           <article class="game">
             <span class="when">2:20 &middot; Game 2</span>
             <h3>Flip Cup Trivia</h3>
-            <p>Answer before you flip. A 4-person team picks one player to go twice. Misses can be stolen.</p>
+            <p>7 vs 7 relay. Answer before you flip. Misses can be stolen.</p>
             <div class="pts-line">+1 moderate &middot; +2 advanced &middot; +5 round win</div>
           </article>
         </div>
         <div class="wheel">
-          <div class="wheel-pin"><div class="wheel-disc" id="wheelDisc"></div></div>
+          <div class="wheel-stage"><span class="wheel-pointer" aria-hidden="true"></span><svg id="wheelSvg" viewBox="-110 -110 220 220" aria-hidden="true"></svg><button class="wheel-hub" id="wheelHub" type="button" aria-label="Spin the wheel">SPIN</button></div>
           <div class="wheel-out">
             <h3>Pitch Wheel</h3>
             <div class="wheel-result" id="wheelResult">Who are you pitching?</div>
@@ -551,7 +580,7 @@ body.big input.team-name{font-size:30px}
 (function(){
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  const reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduced = false; // effects only run on a click, so they always play
 
   /* ---------- Effects ---------- */
   const fx = $("fx"), ctx = fx.getContext("2d");
@@ -601,12 +630,12 @@ body.big input.team-name{font-size:30px}
   /* ---------- Agenda + now card ---------- */
   const MEETING = {y:2026,m:9,d:1};
   const AGENDA = [
-    {s:"9:30", e:"9:45", t:"Welcome + Team Draft", d:"Draw into 3 balanced teams of 5. Pick a team name.", k:"game"},
+    {s:"9:30", e:"9:45", t:"Welcome + Team Draft", d:"Split into 2 balanced teams of 7. Pick a team name.", k:"game"},
     {s:"9:45", e:"10:15",t:"Q3 Wins & Recognition", d:"Referral insights, award cards, and the AE leaderboard.", k:"rec"},
     {s:"10:15",e:"10:40",t:"Q4 Goals & Targets", d:"Q4 budget, YTD tracking, and top priorities.", k:"biz"},
     {s:"10:40",e:"10:50",t:"Break", d:"", k:"brk"},
     {s:"10:50",e:"11:30",t:"Quality Referrals & Referral Documentation", d:"What makes a quality referral, clean documentation, plus Missing Piece relay.", k:"biz"},
-    {s:"11:30",e:"12:05",t:"Game 1: Objection Pong", d:"Round robin with objection cards.", k:"game"},
+    {s:"11:30",e:"12:05",t:"Game 1: Objection Pong", d:"Head-to-head, best of 3, with objection cards.", k:"game"},
     {s:"12:05",e:"12:45",t:"Catered Lunch", d:"Light trivia or Two Truths and a Lie.", k:"brk"},
     {s:"12:45",e:"13:30",t:"Referral Report Insights & Strategy", d:"Trends, top and under-used sources, action items.", k:"biz"},
     {s:"13:30",e:"14:10",t:"Copilot Workshop", d:"Demo plus Copilot Speed Challenge.", k:"biz"},
@@ -703,12 +732,12 @@ body.big input.team-name{font-size:30px}
   });
 
   /* ---------- Scoreboard ---------- */
-  const COLORS = ["var(--t1)","var(--t2)","var(--t3)"];
-  const HEX = ["#8ED8FF","#FFB3D4","#FFE66E"];
+  const COLORS = ["var(--t1)","var(--t2)"];
+  const HEX = ["#8ED8FF","#FFB3D4"];
   $("activity").innerHTML = ACTIVITIES.map(a => `<option>${esc(a)}</option>`).join("");
   $("activity").addEventListener("change", () => { activityTouched = true; });
 
-  const DEFAULT = () => ({teams:[{name:"Team 1",score:0},{name:"Team 2",score:0},{name:"Team 3",score:0}], log:[]});
+  const DEFAULT = () => ({teams:[{name:"Team 1",score:0},{name:"Team 2",score:0}], log:[]});
   let state = DEFAULT(), docRef = null, mode = "connecting";
   const LS_KEY = "q4gameday-scoreboard";
 
@@ -828,7 +857,7 @@ body.big input.team-name{font-size:30px}
   }
   $("resetBtn").onclick = showResetConfirm;
 
-  const valid = d => d && Array.isArray(d.teams) && d.teams.length === 3;
+  const valid = d => d && Array.isArray(d.teams) && d.teams.length === 2;
   function fallbackLocal(){
     setSync("local");
     try{ const raw = localStorage.getItem(LS_KEY); if (raw){ const d = JSON.parse(raw); if (valid(d)) state = {teams:d.teams, log:d.log||[]}; } }catch(e){}
@@ -857,22 +886,56 @@ body.big input.team-name{font-size:30px}
   }
 
   /* ---------- Pitch wheel ---------- */
-  const SOURCES = ["Cardiologist","Hospitalist","SNF discharge planner","ALF executive director","Primary care physician","Orthopedic surgeon","Wound care clinic","Hospital case manager","Pulmonologist","Independent living community","Nephrologist","Palliative care NP","Neurologist","Senior center director"];
-  let spinDeg = 0, spinning = false;
-  $("spinBtn").addEventListener("click", () => {
+  const SOURCES = ["Cardiologist","Hospitalist","SNF Planner","ALF Director","PCP Office","Ortho Surgeon","Wound Clinic","Case Manager","Pulmonologist","Nephrologist","Palliative NP","Neurologist"];
+  const WCOL = ["#8ED8FF","#FFB3D4","#FFE66E","#CDBBFF","#A6F0D0","#FFD3B0"];
+  const N = SOURCES.length, SEG = 360 / N;
+  const svg = $("wheelSvg"), NS = "http://www.w3.org/2000/svg";
+  const g = document.createElementNS(NS, "g"); svg.appendChild(g);
+  const pt = (deg, r) => { const a = (deg - 90) * Math.PI / 180; return [(Math.cos(a) * r).toFixed(2), (Math.sin(a) * r).toFixed(2)]; };
+  SOURCES.forEach((name, k) => {
+    const a0 = k * SEG, a1 = a0 + SEG, [x0,y0] = pt(a0, 104), [x1,y1] = pt(a1, 104);
+    const path = document.createElementNS(NS, "path");
+    path.setAttribute("d", `M0 0 L${x0} ${y0} A104 104 0 0 1 ${x1} ${y1} Z`);
+    path.setAttribute("fill", WCOL[k % WCOL.length]); path.setAttribute("stroke", "#2A2150"); path.setAttribute("stroke-width", "2");
+    g.appendChild(path);
+    const t = document.createElementNS(NS, "text"), mid = a0 + SEG / 2;
+    t.setAttribute("transform", `rotate(${mid}) translate(0 -62) rotate(90)`);
+    t.setAttribute("text-anchor", "middle"); t.setAttribute("dominant-baseline", "central");
+    t.setAttribute("font-family", "Nunito, system-ui, sans-serif"); t.setAttribute("font-weight", "900"); t.setAttribute("font-size", "8.6"); t.setAttribute("fill", "#2A2150");
+    t.textContent = name; g.appendChild(t);
+  });
+  const rim = document.createElementNS(NS, "circle");
+  rim.setAttribute("r", "105"); rim.setAttribute("fill", "none"); rim.setAttribute("stroke", "#2A2150"); rim.setAttribute("stroke-width", "4"); svg.appendChild(rim);
+  let rot = 0, spinning = false;
+  const underPointer = r => { const a = ((360 - (r % 360)) % 360); return Math.floor(a / SEG) % N; };
+  function spin(){
     if (spinning) return;
     spinning = true;
-    const pick = SOURCES[Math.floor(Math.random()*SOURCES.length)];
-    spinDeg += 1080 + Math.floor(Math.random()*360);
-    $("wheelDisc").style.transform = `rotate(${spinDeg}deg)`;
-    let n = 0;
-    const iv = setInterval(() => { $("wheelResult").textContent = SOURCES[n++ % SOURCES.length]; }, 90);
-    setTimeout(() => {
-      clearInterval(iv); $("wheelResult").textContent = pick; spinning = false;
-      const r = $("wheelDisc").getBoundingClientRect();
-      confetti(r.left + r.width/2, r.top + r.height/2, 30);
-    }, reduced ? 50 : 2200);
-  });
+    const pick = Math.floor(Math.random() * N);
+    const jitter = (Math.random() - .5) * SEG * .6;
+    const base = rot - (rot % 360);
+    const target = base + 360 * (5 + Math.floor(Math.random() * 2)) + (360 - (pick * SEG + SEG / 2)) + jitter;
+    const start = rot, dist = target - start, dur = 4200, t0 = performance.now();
+    const out = $("wheelResult"); out.classList.remove("win");
+    let last = -1;
+    function frame(now){
+      const t = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - t, 4);
+      rot = start + dist * e;
+      g.setAttribute("transform", `rotate(${rot.toFixed(2)})`);
+      const k = underPointer(rot);
+      if (k !== last){ last = k; out.textContent = SOURCES[k]; }
+      if (t < 1) requestAnimationFrame(frame);
+      else {
+        spinning = false; out.textContent = SOURCES[pick]; void out.offsetWidth; out.classList.add("win");
+        const r = $("wheelSvg").getBoundingClientRect();
+        confetti(r.left + r.width/2, r.top + r.height/2, 60);
+        toast(`Pitch to: ${SOURCES[pick]}!`);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  $("spinBtn").addEventListener("click", spin);
+  $("wheelHub").addEventListener("click", spin);
 
   setSync("connecting");
   renderTeams();
@@ -1148,6 +1211,31 @@ body.big input.team-name{font-size:30px}
       render();
     }, () => { ref = null; mode = "local"; render(); });
   })();
+})();
+</script>
+
+<script>
+(function(){
+  const nav = document.getElementById("tabnav");
+  const KEY = "q4gameday-tab";
+  function show(t, scroll){
+    document.querySelectorAll(".panel[data-tab]").forEach(p => p.classList.toggle("active", p.dataset.tab === t));
+    nav.querySelectorAll("button").forEach(b => b.setAttribute("aria-selected", b.dataset.t === t ? "true" : "false"));
+    try{ localStorage.setItem(KEY, t); }catch(e){}
+    if (scroll){ const y = nav.getBoundingClientRect().top + window.scrollY - 12; if (window.scrollY > y) window.scrollTo({top:y, behavior:"smooth"}); }
+    if (t === "ri"){ document.querySelectorAll("#reasonBars i").forEach(i => { if (!document.getElementById("riFocus").hidden) i.style.width = i.dataset.w + "%"; }); }
+    if (t === "lb"){ document.querySelectorAll("#lbRamp i").forEach(el => el.style.height = el.dataset.h + "px"); }
+  }
+  nav.addEventListener("click", e => { const b = e.target.closest("button[data-t]"); if (b) show(b.dataset.t, true); });
+  nav.addEventListener("keydown", e => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const bs = [...nav.querySelectorAll("button")], i = bs.indexOf(document.activeElement); if (i < 0) return;
+    const n = bs[(i + (e.key === "ArrowRight" ? 1 : -1) + bs.length) % bs.length]; n.focus(); show(n.dataset.t, false);
+  });
+  let start = "agenda";
+  try{ const v = localStorage.getItem(KEY); if (v && document.querySelector(`.panel[data-tab="${v}"]`)) start = v; }catch(e){}
+  const h = (location.hash || "").slice(1); if (h && document.querySelector(`.panel[data-tab="${h}"]`)) start = h;
+  show(start, false);
 })();
 </script>
 </body>
